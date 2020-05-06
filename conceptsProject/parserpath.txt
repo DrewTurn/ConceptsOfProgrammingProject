@@ -1,0 +1,29 @@
+
+$$inicates  end of the input file and there is no lexical error.
+null inicates it could be an end of branch
+
+if something goes wrong stop output and print error
+ 
+ for program is required recursive descent approach.
+ 
+ code wise have a funtion for each branch
+
+<program> → <stmt list> $$
+
+<stmt list> → <stmt> <stmt list> | null
+
+<stmt> → id assign <expr> | read id | write <expr>
+
+<expr> → <term> <term tail>
+
+<term tail> → <add op> <term> <term tail> | null
+
+<term> → <factor> <fact tail>
+
+<fact tail> → <mult op> <factor> <fact tail> | null
+
+<factor> → lparen <expr> rparen | id | number
+
+<add op> → plus | minus
+
+<mult op> → times | div
