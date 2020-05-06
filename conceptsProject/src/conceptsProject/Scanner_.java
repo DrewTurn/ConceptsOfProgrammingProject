@@ -204,11 +204,24 @@ public class Scanner_ {
                 }
                 Scanner_ finalCheck = new Scanner_(source);
                 finalCheck.printTokens();
+                s.close();
             } catch(FileNotFoundException e) {
                 error(-1, -1, "Exception: " + e.getMessage());
             }
         } else {
             error(-1, -1, "No args");
+        }
+        
+     
+        //this is where call to parser will be
+        
+        String t="$$";//temp 
+		if(t=="$$") {
+        	System.out.println("Parsing Successful"); 
+        }
+        else {
+        	System.out.println("Error");
+        	return;
         }
     }
 }
