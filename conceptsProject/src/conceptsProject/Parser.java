@@ -84,6 +84,7 @@ public class Parser {
 	public static void term_tail(List input) {
 	
 		//code
+		if(input.size()<counter) {
 		try {
 			Integer.parseInt(String.valueOf(input.get(counter)));//so what this does is convert  input.get  to sting then checks if string or an int
 			
@@ -104,7 +105,12 @@ public class Parser {
 		System.out.println("					</term tail>");
 		return;
 		}
+		System.out.println("					<term tail>");
+				System.out.println("						Null");	
+				System.out.println("					</term tail>");
+				return;
 		
+		}
 	}
 	public static void term(List input) {
 		System.out.println("				<term>");
@@ -117,6 +123,7 @@ public class Parser {
 	}
 	public static void fact_tail(List input) {
 		//<mult op> <factor> <fact tail> or null
+		if(input.size()<counter) {
 		try {
 			Integer.parseInt(String.valueOf(input.get(counter)));//so what this does is convert  input.get  to sting then checks if string or an int
 			
@@ -126,16 +133,19 @@ public class Parser {
 				return;
 			}
 		
-		System.out.println("					<fact tail>");
+		
 		//--------------------
 		
 		if(String.valueOf(input.get(counter))=="*"||String.valueOf(input.get(counter))=="/") {
+			System.out.println("					<fact tail>");
 			mult_op(input);
 			factor(input);
 			fact_tail(input);
 			System.out.println("					</fact tail>");
 			return;
 		}
+		}
+		System.out.println("					<fact tail>");
 		System.out.println("						Null");	
 		System.out.println("					</fact tail>");
 	}
@@ -152,24 +162,30 @@ public class Parser {
 			}
 		//lparen <expr> rparen or id or number
 		
-		if(input.get(counter+1)=="+"||input.get(counter+1)=="-"||input.get(counter+1)=="*"||input.get(counter+1)=="/") {
-			System.out.println("					<factor>");
-			System.out.println("				"+input.get(counter));
-			counter++;
-			expr(input);
-			System.out.println(input.get(counter));
-			System.out.println("					</factor>");
-			return;
+		if(input.size()<counter) {
+			if(String.valueOf(input.get(counter+1))=="+"||String.valueOf(input.get(counter+1))=="-"||String.valueOf(input.get(counter+1))=="*"||String.valueOf(input.get(counter+1))=="/") {
+			//this is the line that is giveing overflow 
+				System.out.println("					<factor>");
+				System.out.println("				"+input.get(counter));
+				counter++;
+				expr(input);
+				System.out.println(input.get(counter));
+				System.out.println("					</factor>");
+				return;
+			}
+			else {
+				System.out.println("					<factor>");
+				System.out.println("						"+input.get(counter));
+				System.out.println("					</factor>");
+				counter++;
+				return;
+			}
 		}
-		else {
-			System.out.println("					<factor>");
-			System.out.println("						"+input.get(counter));
-			System.out.println("					</factor>");
-			counter++;
-			return;
-		}
-		
-		
+		System.out.println("					<factor>");
+		System.out.println("						"+input.get(counter));
+		System.out.println("					</factor>");
+		counter++;
+		return;
 	}
 	public static void add_op(List input) {
 		System.out.println("						<add_op>");
