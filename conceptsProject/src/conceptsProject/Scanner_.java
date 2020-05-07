@@ -1,7 +1,9 @@
 package conceptsProject;
 
 
-import java.io.*;  
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Scanner_ {
@@ -10,7 +12,8 @@ public class Scanner_ {
     private int position;
     private char character;
     private String s;
- 
+    private static StreamTokenizer tokens;
+    private static int token;
     Map<String, TokenType> keywords = new HashMap<>();
     
     
@@ -20,7 +23,8 @@ public class Scanner_ {
         public int line;
         public int pos;
         Token(TokenType token, String value){
-            this.tokentype = token; this.value = value; 
+            this.tokentype = token; 
+            this.value = value; 
         }
         @Override
         public String toString() {
@@ -154,17 +158,35 @@ public class Scanner_ {
         pos = this.pos;
  
         switch (this.character) {
-            case '\u0000': return new Token(TokenType.End_of_input, "");
-            case '/': return commentCheck(line, pos);
-            case '=': return follow('=', TokenType.Equal, TokenType.Assignment, line, pos);
-            case '|': return follow('|', TokenType.Or, TokenType.End_of_input, line, pos);
-            case '(': getNextChar(); return new Token(TokenType.LeftParen,"" );
-            case ')': getNextChar(); return new Token(TokenType.RightParen, "");
-            case '+': getNextChar(); return new Token(TokenType.Addition, "");
-            case '-': getNextChar(); return new Token(TokenType.Subtraction, "");
-            case '*': getNextChar(); return new Token(TokenType.Multiplication, "");
-            case ';': getNextChar(); return new Token(TokenType.Semicolon, "");
-            case ',': getNextChar(); return new Token(TokenType.Comma, "");
+            case '\u0000': 
+            	return new Token(TokenType.End_of_input, "");
+            case '/': 
+            	return commentCheck(line, pos);
+            case '=': 
+            	return follow('=', TokenType.Equal, TokenType.Assignment, line, pos);
+            case '|': 
+            	return follow('|', TokenType.Or, TokenType.End_of_input, line, pos);
+            case '(': 
+            	getNextChar(); 
+            	return new Token(TokenType.LeftParen,"" );
+            case ')': 
+            	getNextChar(); 
+            	return new Token(TokenType.RightParen, "");
+            case '+': 
+            	getNextChar();
+            	return new Token(TokenType.Addition, "");
+            case '-': 
+            	getNextChar(); 
+            	return new Token(TokenType.Subtraction, "");
+            case '*': 
+            	getNextChar();
+            	return new Token(TokenType.Multiplication, "");
+            case ';':
+            	getNextChar(); 
+            	return new Token(TokenType.Semicolon, "");
+            case ',': 
+            	getNextChar(); 
+            	return new Token(TokenType.Comma, "");
  
             default: return idCheck(line, pos);
         }
@@ -192,8 +214,28 @@ public class Scanner_ {
         }
         System.out.println(t);
     }
+    
+  
+    
+    private static String stringmade(String filePath) 
+    {
+        String content = "";
+ 
+        try
+        {
+            content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+ 
+        return content;
+    }
+
     public static void main(String[] args) {
-        if (args.length == 0) {
+    	ArrayList<String> list = new ArrayList<String>();
+         if (args.length == 0) {
             try {
             	String fileName = "foo.txt";
                 File f = new File(fileName);
@@ -208,12 +250,24 @@ public class Scanner_ {
             } catch(FileNotFoundException e) {
                 error(-1, -1, "Exception: " + e.getMessage());
             }
+          
         } else {
             error(-1, -1, "No args");
         }
+       //this will print tokens to screen  
         
-     
-        //this is where call to parser will be
+       //this will   
+        /*
+        	String fileName = "foo.txt";
+        	String str1 = stringmade(fileName);
+        	StringTokenizer TokensOfInput = new StringTokenizer(str1);
+        	while (TokensOfInput.hasMoreTokens()) {
+                list.add(TokensOfInput.nextToken());
+            }  
+          Parser Parser = new Parser();
+        //this is where call to parser will be list1 is list of all tokens
+        	Parser.Parser(list,0);
+        
         
         String t="$$";//temp 
 		if(t=="$$") {
@@ -223,5 +277,6 @@ public class Scanner_ {
         	System.out.println("Error");
         	return;
         }
+        */
     }
 }
