@@ -26,125 +26,181 @@ import java.io.*;
  * 
  */
 public class Parser {
-	 
+	 public static int counter = 0;
 
 	
 	
-	public String Parser(List input,int counter) {
+	public String Parser(List input) {
 		System.out.println("<Program>");
 		//code to call next is here
 		//calls <stmt list> $$
-		StatmentList(input, counter);
+		StatmentList(input);
 		System.out.println("</Program>");
 		return "$$";
 	}
 	
-	public static void StatmentList(List input,int counter) {
+	public static void StatmentList(List input) {
 		//calls <stmt><stmt list> or null
 		//code
 		
-		 if(input.get(counter)=="\u0000"){
+		 if(input.size()==counter){
 		 //supposte to check to see if end of file and if is return and exit make sure it works and if not why
 			 return;
 		 }		 
-		System.out.println("<stmt list>");
-		Statment(input, counter);
-		StatmentList(input, counter);
-		System.out.println("</stmt list>");
+		System.out.println("	<stmt list>");
+		Statment(input);
+		StatmentList(input);
+		System.out.println("	</stmt list>");
 		return;
 	}
 	
-	public static void Statment(List input,int counter) {
-		System.out.println("<stmt>");
+	public static void Statment(List input) {
+		System.out.println("		<stmt>");
 		//code
 		//call id assign <expr> or read id or write <expr>
 		try {
-		Integer.parseInt(String.valueOf(input.get(counter)));//so what this does is convert  input.get(counter to sting then checks if string is an int
+		Integer.parseInt(String.valueOf(input.get(counter)));//so what this does is convert  input.get  to sting then checks if string is an int
 			//call write exprestion
 		}
 		catch(NumberFormatException nfe){
 			//if it is here then it is not a number so call it read and return
+			System.out.println("			Read "+input.get(counter));
 			counter++;
-			System.out.println(input);
-			System.out.println("</stmt>");
+			System.out.println("		</stmt>");
 			return;
 		}
 		//if here then it is a number and procced without going to the next slot on the list because as a number that is done later
-		expr(input, counter);		
-		System.out.println("</stmt>");
+		expr(input);		
+		System.out.println("		</stmt>");
 	}
-	public static void expr(List input,int counter) {
-		System.out.println("<expr>");
+	public static void expr(List input) {
+		System.out.println("			<expr>");
 		//code
 		//call <term><term tail>
-		term(input, counter);
-		term_tail(input, counter);
-		System.out.println("</expr>");
+		term(input);
+		term_tail(input);
+		System.out.println("			</expr>");
 	}
-	public static void term_tail(List input,int counter) {
-		System.out.println("<term tail>");
+	public static void term_tail(List input) {
+	
 		//code
-		//if(null){
-		//return
-		//}
-		//<add op> <term> <term tail> or null
-		add_op(input, counter);
-		term(input, counter);
-		term_tail(input, counter);
-		System.out.println("</term tail>");
+		try {
+			Integer.parseInt(String.valueOf(input.get(counter)));//so what this does is convert  input.get  to sting then checks if string or an int
+			
+			}
+			catch(NumberFormatException nfe){
+				//if it is here then it is not a number so call it read and return
+				System.out.println("					<term tail>");
+				System.out.println("						Null");	
+				System.out.println("					</term tail>");
+				return;
+			}
+			//
+		if(String.valueOf(input.get(counter))=="+"||String.valueOf(input.get(counter))=="-") {
+		System.out.println("					<term tail>");
+		add_op(input);
+		term(input);
+		term_tail(input);
+		System.out.println("					</term tail>");
+		return;
+		}
+		
 	}
-	public static void term(List input,int counter) {
-		System.out.println("<term>");
+	public static void term(List input) {
+		System.out.println("				<term>");
 		//code
 		
 		//go to <factor> <fact tail>
-		factor(input, counter);
-		fact_tail(input, counter);
-		System.out.println("</term>");
+		factor(input);
+		fact_tail(input);
+		System.out.println("				</term>");
 	}
-	public static void fact_tail(List input,int counter) {
-		System.out.println("<fact tail>");
-		//code
-		//if(null){
-		//return
-		//}
+	public static void fact_tail(List input) {
 		//<mult op> <factor> <fact tail> or null
-			mult_op(input, counter);
-			factor(input, counter);
-			fact_tail(input, counter);
-		System.out.println("</fact tail>");
+		try {
+			Integer.parseInt(String.valueOf(input.get(counter)));//so what this does is convert  input.get  to sting then checks if string or an int
+			
+			}
+			catch(NumberFormatException nfe){
+				//if it is here then it is not a number so return and end branch
+				return;
+			}
+		
+		System.out.println("					<fact tail>");
+		//--------------------
+		
+		if(String.valueOf(input.get(counter))=="*"||String.valueOf(input.get(counter))=="/") {
+			mult_op(input);
+			factor(input);
+			fact_tail(input);
+			System.out.println("					</fact tail>");
+			return;
+		}
+		System.out.println("						Null");	
+		System.out.println("					</fact tail>");
 	}
-	public static void factor(List input,int counter) {
-		System.out.println("<factor>");
+	public static void factor(List input) {
 		//code
+		try {
+			Integer.parseInt(String.valueOf(input.get(counter)));//so what this does is convert  input.get  to sting then checks if string or an int
+			}
+			catch(NumberFormatException nfe){
+				//if it is here then it is not a number so call it read and return
+				System.out.println("Error Factor Catch");
+				System.exit(0);
+				
+			}
 		//lparen <expr> rparen or id or number
-		System.out.println("</factor>");
+		
+		if(input.get(counter+1)=="+"||input.get(counter+1)=="-"||input.get(counter+1)=="*"||input.get(counter+1)=="/") {
+			System.out.println("					<factor>");
+			System.out.println("				"+input.get(counter));
+			counter++;
+			expr(input);
+			System.out.println(input.get(counter));
+			System.out.println("					</factor>");
+			return;
+		}
+		else {
+			System.out.println("					<factor>");
+			System.out.println("						"+input.get(counter));
+			System.out.println("					</factor>");
+			counter++;
+			return;
+		}
+		
+		
 	}
-	public static void add_op(List input,int counter) {
-		System.out.println("<add_op>");
+	public static void add_op(List input) {
+		System.out.println("						<add_op>");
 		
 		//plus or minus
-		/*if() {
-			System.out.println("+");
-		}else {
-			System.out.println("-");
-		}*/
-		System.out.println("</add_op>");
+		if(String.valueOf(input.get(counter))=="+") {
+			System.out.println("						+");
+		}else if(String.valueOf(input.get(counter))=="-") {
+			System.out.println("						-");
+		}
+		else {
+			System.out.println("Error mult_op");
+			System.exit(0);
+		}
+			counter++;
+		System.out.println("						</add_op>");
 	}    
-	public static void mult_op(List input,int counter) {
-		System.out.println("<mult op>");
+	public static void mult_op(List input) {
+		System.out.println("						<mult op>");
 		//times or div
-				if(input.get(counter)=="*") {
-					System.out.println("*");
-				}else if(input.get(counter)=="/") {
-					System.out.println("/");
+				if(String.valueOf(input.get(counter))=="*") {
+					System.out.println("						*");
+				}else if(String.valueOf(input.get(counter))=="/") {
+					System.out.println("						/");
 				}
 				else {
 					System.out.println("Error mult_op");
 					System.exit(0);
 				}
 					counter++;
-		System.out.println("</mult op>");
+		System.out.println("						</mult op>");
 		return;
 	} 
 	

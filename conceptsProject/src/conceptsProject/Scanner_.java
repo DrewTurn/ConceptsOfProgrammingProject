@@ -255,21 +255,19 @@ public class Scanner_ {
             error(-1, -1, "No args");
         }
        //this will print tokens to screen  
-        
-       //this will   
-        /*
-        	String fileName = "foo.txt";
+         	
+         	String fileName = "foo.txt";
         	String str1 = stringmade(fileName);
         	StringTokenizer TokensOfInput = new StringTokenizer(str1);
         	while (TokensOfInput.hasMoreTokens()) {
                 list.add(TokensOfInput.nextToken());
             }  
           Parser Parser = new Parser();
-        //this is where call to parser will be list1 is list of all tokens
-        	Parser.Parser(list,0);
+        //this is where call to parser will be list1 is list of all tokens so that it can be sent to parser
+        	
         
         
-        String t="$$";//temp 
+        String t = Parser.Parser(list);
 		if(t=="$$") {
         	System.out.println("Parsing Successful"); 
         }
@@ -277,6 +275,6 @@ public class Scanner_ {
         	System.out.println("Error");
         	return;
         }
-        */
+        
     }
 }
