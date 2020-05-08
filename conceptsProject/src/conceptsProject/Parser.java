@@ -105,12 +105,13 @@ public class Parser {
 		System.out.println("					</term tail>");
 		return;
 		}
-		System.out.println("					<term tail>");
+	
+		
+		}
+				System.out.println("					<term tail>");
 				System.out.println("						Null");	
 				System.out.println("					</term tail>");
 				return;
-		
-		}
 	}
 	public static void term(List input) {
 		System.out.println("				<term>");
@@ -137,17 +138,17 @@ public class Parser {
 		//--------------------
 		
 		if(String.valueOf(input.get(counter))=="*"||String.valueOf(input.get(counter))=="/") {
-			System.out.println("					<fact tail>");
+			System.out.println("						<fact tail>");
 			mult_op(input);
 			factor(input);
 			fact_tail(input);
-			System.out.println("					</fact tail>");
+			System.out.println("						</fact tail>");
 			return;
 		}
 		}
-		System.out.println("					<fact tail>");
+		System.out.println("						<fact tail>");
 		System.out.println("						Null");	
-		System.out.println("					</fact tail>");
+		System.out.println("						</fact tail>");
 	}
 	public static void factor(List input) {
 		//code
