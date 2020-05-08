@@ -1,5 +1,6 @@
 package conceptsProject;
-
+//jonathan Turner
+//J Trevino
 import java.util.*;
 import java.io.*;
 /*
@@ -163,7 +164,7 @@ public class Parser {
 			}
 		//lparen <expr> rparen or id or number
 		
-		if(input.size()<counter) {
+		if(Integer.parseInt(String.valueOf(input.get(counter)))<counter) {
 			if(String.valueOf(input.get(counter+1))=="+"||String.valueOf(input.get(counter+1))=="-"||String.valueOf(input.get(counter+1))=="*"||String.valueOf(input.get(counter+1))=="/") {
 			//this is the line that is giveing overflow 
 				System.out.println("					<factor>");
@@ -182,6 +183,7 @@ public class Parser {
 				return;
 			}
 		}
+		
 		System.out.println("					<factor>");
 		System.out.println("						"+input.get(counter));
 		System.out.println("					</factor>");

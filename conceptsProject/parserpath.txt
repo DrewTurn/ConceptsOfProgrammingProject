@@ -22,7 +22,7 @@ if something goes wrong stop output and print error
 
 <fact tail> → <mult op> <factor> <fact tail> | null
 
-<factor> → lparen <expr> rparen | id | number
+<factor> → lparen <expr> rparen | number
 
 <add op> → plus | minus
 
